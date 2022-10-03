@@ -1,0 +1,24 @@
+#配置数据库信息
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/vueblog?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: ADMIN
+
+#指定mybatisPlus扫描的xml文件
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**Mapper.xml
+
+#指定端口
+server:
+  port: 8081
+
+#jwt加密
+gyg:
+  jwt:
+    # 加密秘钥
+    secret: f4e2e52034348f86b67cde581c0f9eb5
+    # token有效时长，7天，单位秒
+    expire: 604800
+    header: authorization
