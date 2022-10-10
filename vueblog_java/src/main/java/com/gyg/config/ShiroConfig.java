@@ -12,8 +12,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.annotation.Resource;
 import javax.servlet.Filter;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 
@@ -23,9 +25,8 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig {
 
-
-    @Autowired
-    JwtFilter jwtFilter;
+    @Resource
+    private JwtFilter jwtFilter;
 
     /**
      * 1、建立用户realm
@@ -94,6 +95,7 @@ public class ShiroConfig {
     @Bean
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("securityManager") DefaultWebSecurityManager securityManager) {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
+        // Shiro的核心安全接口,这个属性是必须的
         bean.setSecurityManager(securityManager);
 
 //        封装jwt
