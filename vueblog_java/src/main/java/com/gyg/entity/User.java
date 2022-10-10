@@ -1,8 +1,11 @@
 package com.gyg.entity;
 
+import cn.hutool.core.date.DateTime;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 import lombok.Data;
@@ -45,9 +48,9 @@ public class User implements Serializable {
 
     private Integer status;
 
-    private LocalDateTime created;
+    private Timestamp created;
 
-    private LocalDateTime lastLogin;
+    private Timestamp lastLogin;
 
 
 }

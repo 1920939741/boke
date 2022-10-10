@@ -2,21 +2,19 @@ package com.gyg.controller;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.map.MapUtil;
-import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.gyg.common.dto.LoginDto;
 import com.gyg.common.lang.Result;
 import com.gyg.entity.User;
 import com.gyg.service.UserService;
-import com.gyg.shiro.AccountProfile;
-import com.gyg.shiro.JwtToken;
 import com.gyg.util.JwtUtils;
-import io.jsonwebtoken.Jwt;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.subject.Subject;
-import org.omg.CORBA.UnknownUserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @RestController
+@Slf4j
 public class AccountController {
 
     @Autowired
@@ -39,14 +38,11 @@ public class AccountController {
 
     @PostMapping("/login")
     public Result login(@Validated @RequestBody LoginDto loginDto, HttpServletResponse response) {
-
-        System.out.println("用户名和密码:" + loginDto.getUsername() + " " + loginDto.getPassword());
+        log.info(String.format("用户名-密码:%s - %s", loginDto.getUsername(),loginDto.getPassword()));
 //        获取到当前用户
         Subject subject = SecurityUtils.getSubject();
 //        封装用户名和密码
         UsernamePasswordToken token = new UsernamePasswordToken(loginDto.getUsername(), loginDto.getPassword());
-
-        System.out.println("封装用户名和密码成功！！！");
 
         try {
 //            使用shiro进行用户验证

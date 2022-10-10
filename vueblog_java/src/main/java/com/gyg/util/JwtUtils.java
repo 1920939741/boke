@@ -24,6 +24,8 @@ public class JwtUtils {
     private String header;
 
     /**
+     * 私钥加密token
+     *
      * 生成jwt token
      */
     public String generateToken(long userId) {
@@ -41,6 +43,8 @@ public class JwtUtils {
     }
 
     /**
+     * 公钥解析token
+     *
      * 获取jwt的信息
      */
     public Claims getClaimByToken(String token) {

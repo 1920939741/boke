@@ -10,16 +10,15 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.ExpiredCredentialsException;
 import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 import org.apache.shiro.web.util.WebUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Iterator;
 
 /**
  * 配置jwt的过滤器，可以自动登录方法的的过滤器
@@ -27,8 +26,8 @@ import java.util.Iterator;
 @Component
 public class JwtFilter extends AuthenticatingFilter {
 
-    @Autowired
-    JwtUtils jwtUtils;
+    @Resource
+    private JwtUtils jwtUtils;
 
     /**
      * 实现登录，我们需要生成我们自定义支持的JwtToken
