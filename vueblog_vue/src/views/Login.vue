@@ -1,35 +1,53 @@
 <script src="../main.js"></script>
+<Particles></Particles>
 <template>
     <div>
-        <el-container>
-            <el-header>
-                <img class="mlogo" src="../assets/hxy.png">
-            </el-header>
+      <Particles></Particles>
+      <div class="login">
+        <div class="mylogin" align="center">
+          <h4>登录</h4>
+          <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px">
+            <el-form-item label="" prop="username" style="margin-top: 10px">
+              <el-row>
+                <el-col :span="2">
+                  <span class="el-icon-s-custom"></span>
+                </el-col>
+                <el-col :span="22">
+                  <el-input  placeholder="账号"   class="inps" v-model="ruleForm.username"></el-input>
+                </el-col>
+              </el-row>
+            </el-form-item>
+            <el-form-item label="" prop="passWord">
+              <el-row>
+                <el-col :span="2">
+                  <span class="el-icon-lock"></span>
+                </el-col>
+                <el-col :span="22">
+                  <el-input type="password"  class="inps" placeholder="密码" v-model="ruleForm.password"></el-input>
+                </el-col>
+              </el-row>
+            </el-form-item>
+            <el-form-item style="margin-top: 55px">
+              <el-button type="primary" class="submitBtn" @click="submitForm('ruleForm')">登录</el-button>
+            </el-form-item>
+            <div class="unlogin">
+              <router-link :to="{ path: '/forgetpwd' }"> 忘记密码? </router-link>
+              |
+              <router-link :to="{ path: '/register' }">
+                <a href="register.vue" target="_blank" align="right">注册新账号</a>
+              </router-link>
+            </div>
+          </el-form>
+        </div>
+      </div>
 
-            <!--登录表单-->
-            <el-main>
-                <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-                    <el-form-item label="用户名：" prop="username">
-                        <el-input v-model="ruleForm.username"></el-input>
-                    </el-form-item>
-
-                    <el-form-item label="密码：" prop="password">
-                        <el-input type="password" v- v-model="ruleForm.password"></el-input>
-                    </el-form-item>
-
-                    <el-form-item>
-                        <el-button type="primary" @click="submitForm('ruleForm')">立即登录</el-button>
-                        <el-button @click="resetForm('ruleForm')">重置</el-button>
-                    </el-form-item>
-                </el-form>
-            </el-main>
-
-        </el-container>
     </div>
 </template>
 
 <script>
+    import Particles from '@/components/particles/index'
     export default {
+        components: {Particles},
         name: "Login",
         data() {
             return {
@@ -49,6 +67,7 @@
                 }
             };
         },
+
         methods: {
 
             /**提交表单**/
@@ -103,49 +122,50 @@
 </script>
 
 <style scoped>
-    .el-header, .el-footer {
-        /*background-color: #B3C0D1;*/
-        color: #333;
-        text-align: center;
-        /*line-height: 600px;*/
-        height: 100px !important;
-    }
+  .login {
 
-    .el-aside {
-        background-color: #D3DCE6;
-        color: #333;
-        text-align: center;
-        line-height: 200px;
-    }
+    padding: 0;
+    margin: 0;
+    height: 100vh;
+    font-size: 16px;
+    background-position: left top;
 
-    .el-main {
-        /*background-color: #E9EEF3;*/
-        color: #333;
-        text-align: center;
-        line-height: 160px;
-    }
+    color: #fff;
+    font-family: "Source Sans Pro";
+    position: relative;
+  }
 
-    body > .el-container {
-        margin-bottom: 40px;
-    }
+  .mylogin {
+    width: 240px;
+    height: 280px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    padding: 50px 40px 40px 40px;
+    box-shadow: -15px 15px 15px rgba(6, 17, 47, 0.7);
+    opacity: 1;
+    background: linear-gradient(
+        230deg,
+        rgba(53, 57, 74, 0) 0%,
+        rgb(0, 0, 0) 100%
+    );
+  }
 
-    .el-container:nth-child(5) .el-aside,
-    .el-container:nth-child(6) .el-aside {
-        line-height: 260px;
-    }
+  .inps input {
+    border: none;
+    color: #fff;
+    background-color: transparent;
+    font-size: 12px;
+  }
 
-    .el-container:nth-child(7) .el-aside {
-        line-height: 320px;
-    }
-
-    .mlogo {
-        height: 100px;
-    }
-
-    .demo-ruleForm {
-        max-width: 400px;
-        margin: 0 auto;
-    }
+  .submitBtn {
+    background-color: transparent;
+    color: #39f;
+    width: 200px;
+  }
 
 </style>
 
