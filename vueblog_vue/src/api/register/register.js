@@ -5,5 +5,5 @@ import ajax from './ajax'
 const BASE_URL = '/api'
 
 
-export const register = (data) => ajax(BASE_URL+'/register',data, 'POST')
+export const registerUser = (data) => ajax(BASE_URL+'/registerUser',data, 'POST')
 
