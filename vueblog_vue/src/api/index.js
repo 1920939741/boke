@@ -9,3 +9,5 @@ export const pswLogin = (data) => ajax(BASE_URL+'/login',data, 'POST')
 
 export const findByUserName = (data) => ajax(BASE_URL+'/findByUserName',data, 'POST')
 
+export const findByEmail = (data) => ajax(BASE_URL+'/findByEmail',data, 'POST')
+
