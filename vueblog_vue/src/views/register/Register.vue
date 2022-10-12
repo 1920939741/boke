@@ -12,7 +12,7 @@
                   <!-- v-on:mouseleave.native="handleMouseleave()"   -->
                 <el-input 
                   placeholder="请输入账号"    
-                  @blur="onInputBlur"
+                  @blur="checkUsername"
                   class="inps" 
                   v-model="ruleForm.username">
                 </el-input>
@@ -23,9 +23,13 @@
                 <el-input  placeholder="请输入姓名"   class="inps" v-model="ruleForm.name"></el-input>
               </el-col>
             </el-form-item>
-           <el-form-item label="邮箱" prop="email" style="margin-top: 10px">
+                   <el-form-item label="邮箱" prop="email" style="margin-top: 10px">
               <el-col :span="18">
-                <el-input  placeholder="请输入邮箱"   class="inps" v-model="ruleForm.name"></el-input>
+                <el-input  
+                  placeholder="请输入邮箱"   
+                  class="inps" 
+                  @blur="checkEmail"
+                  v-model="ruleForm.email"></el-input>
               </el-col>
             </el-form-item>
             <!-- <el-form-item label="" prop="passWord">
@@ -39,7 +43,7 @@
               </el-row>
             </el-form-item> -->
             <el-form-item style="margin-top: 20px ">
-              <el-button type="primary" class="submitBtn" @click="submitForm('ruleForm')">注册</el-button>
+              <el-button type="primary" class="submitBtn" @click="registerUser()">注册</el-button>
             </el-form-item>
             <!-- <div class="unlogin">
               <router-link :to="{ path: '/forgetpwd' }"> 忘记密码? </router-link>
@@ -71,7 +75,7 @@
                 rules: {
                     username: [
                         {required: true, message: '请输入胡用户名！', trigger: 'blur'},
-                        {min: 3, max: 5, message: '长度在 3 到 15 个字符', trigger: 'blur'}, 
+                        {min: 3, max: 15, message: '长度在 3 到 15 个字符', trigger: 'blur'}, 
                     ],
                     password: [
                         {required: true, message: '请输入密码！', trigger: 'blur'}
@@ -80,7 +84,8 @@
                       {required: true,message: '请输入姓名!', trigger: 'blur'}
                     ],
                     email: [
-                      {required: true,message: '请输入邮箱!', trigger: 'blur'}
+                      {required: true,message: '请输入邮箱!', trigger: 'blur'},
+                      { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
                     ]
                     
 
@@ -141,13 +146,13 @@
             // handleMouseleave(){
             //   alert(222)
             // },
-            onInputBlur(){
+            checkUsername(){
               //alert(this.ruleForm.username)
               if(this.ruleForm.username == 'admin'){
                 this.$message({
-                         type: 'success',
-                         message: '用户名已存在'
-                       });   
+                      type: 'success',
+                      message: '用户名已存在',
+                 });   
               }
               //根据用户名查询
               // this.$axios.post("/findByUserName", this.ruleForm.username).then(res => {
@@ -157,6 +162,36 @@
               //            message: '用户名已存在'
               //          });      
               //     }
+              // });
+            },
+            checkEmail(){
+              if(this.ruleForm.email == '123456@qq.com'){
+                this.$message({
+                      type: 'success',
+                      message: '该邮箱已存在',
+                 });   
+              }
+              //根据邮箱查询
+              // this.$axios.post("/findByEmail", this.ruleForm.email).then(res => {
+              //     if(res.data != null){
+              //          this.$message({
+              //            type: 'success',
+              //            message: '该邮箱已存在'
+              //          });      
+              //     }
+              // });
+            },
+            //注册用户
+            registerUser(){
+              console.log(this.ruleForm);
+              // this.$axios.post("/registerUser", this.ruleForm).then(res => {
+              // if(res.data != null){
+              //      this.$message({
+              //        type: 'success',
+              //        message: '注册成功!'
+              //      });      
+              //       _this.$router.push("/login")
+              // }
               // });
             }
           
