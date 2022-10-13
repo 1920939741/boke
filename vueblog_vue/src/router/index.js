@@ -13,6 +13,8 @@ import Register from '../views/register/Register.vue'
 import forgetpwd from '../views/forgetpwd.vue'
 import BlogEdit from '../views/BlogEdit.vue'
 import BlogDetail from '../views/BlogDetail.vue'
+import emailPage from '../views/emailPage.vue'
+
 
 
 Vue.use(VueRouter)
@@ -42,6 +44,11 @@ const routes = [
         path: '/forgetpwd',
         name: 'forgetpwd',
         component: forgetpwd
+    },
+    {
+        path: '/emailPage',
+        name: 'emailPage',
+        component: emailPage
     },
     {
         path: '/blog/add',

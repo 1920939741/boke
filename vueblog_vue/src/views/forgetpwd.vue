@@ -9,7 +9,7 @@
           <div>
             <h5>为确认身份，我们仍需验证您的安全邮箱</h5>
             <p>点击发送邮件按钮，将会发送一封有验证码的邮件至邮箱</p> 
-            <span>317***@qq.com</span>
+            <span>${this.$route,query.email;}</span>
           </div>
           <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" >
             <el-form-item style="margin-top: 30px">

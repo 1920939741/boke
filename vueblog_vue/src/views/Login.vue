@@ -31,7 +31,7 @@
               <el-button type="primary" class="submitBtn" @click="submitForm('ruleForm')">登录</el-button>
             </el-form-item>
             <div class="unlogin">
-              <router-link :to="{ path: '/forgetpwd' }"> 忘记密码? </router-link>
+              <router-link :to="{ path: '/emailPage' }"> 忘记密码? </router-link>
               |
               <router-link :to="{ path: '/register' }">
                 <a href="register.vue" target="_blank" align="right">注册新账号</a>
