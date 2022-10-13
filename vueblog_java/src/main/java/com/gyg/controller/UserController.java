@@ -6,8 +6,12 @@ import com.gyg.entity.User;
 import com.gyg.service.UserService;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * 测试接口
@@ -15,6 +19,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
+    @Value("${default_password}")
+    private String defaultPassword;
 
     @Autowired
     UserService userService;
@@ -35,9 +42,14 @@ public class UserController {
      * @param user
      * @return
      */
-    @GetMapping("/save")
+    @PostMapping("/save")
     public Result save(@Validated @RequestBody User user){
-        return Result.success(user);
+        user.setPassword(defaultPassword);
+        user.setStatus(0);
+        user.setCreated(new Timestamp(new Date().getTime()));
+        user.setLastLogin(new Timestamp(new Date().getTime()));
+        boolean save = userService.save(user);
+        return Result.success(save);
     }
 
     @GetMapping("/findByUserName")
