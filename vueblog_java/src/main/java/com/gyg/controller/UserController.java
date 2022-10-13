@@ -7,11 +7,7 @@ import com.gyg.service.UserService;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 测试接口
@@ -42,6 +38,16 @@ public class UserController {
     @GetMapping("/save")
     public Result save(@Validated @RequestBody User user){
         return Result.success(user);
+    }
+
+    @GetMapping("/findByUserName")
+    public Result findByUserName(String username){
+        return Result.success(userService.findByUserName(username));
+    }
+
+    @GetMapping("/findByEmail")
+    public Result findByEmail(String email){
+        return Result.success(userService.findByEmail(email));
     }
 
 }
