@@ -3,44 +3,45 @@
 <template>
     <div>
       <Particles></Particles>
-      <div class="login">
-        <div class="mylogin" align="center">
-          <h4>登录</h4>
-          <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px">
-            <el-form-item label="" prop="username" style="margin-top: 10px">
-              <el-row>
-                <el-col :span="2">
-                  <span class="el-icon-s-custom"></span>
-                </el-col>
-                <el-col :span="22">
-                  <el-input  placeholder="账号"   class="inps" v-model="ruleForm.username"></el-input>
-                </el-col>
-              </el-row>
+      <div class="forgetpwe">
+        <div class="myForgetpwe" align="center" v-show="sendemailDiv">
+          <h4>boke帐号安全验证</h4>
+          <div>
+            <h5>为确认身份，我们仍需验证您的安全邮箱</h5>
+            <p>点击发送邮件按钮，将会发送一封有验证码的邮件至邮箱</p> 
+            <span>317***@qq.com</span>
+          </div>
+          <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" >
+            <el-form-item style="margin-top: 30px">
+              <el-button type="primary" class="submitBtn" @click="sendEmail()">发送邮箱</el-button>
             </el-form-item>
-            <el-form-item label="" prop="passWord">
-              <el-row>
-                <el-col :span="2">
-                  <span class="el-icon-lock"></span>
-                </el-col>
-                <el-col :span="22">
-                  <el-input type="password"  class="inps" placeholder="密码" v-model="ruleForm.password"></el-input>
-                </el-col>
-              </el-row>
-            </el-form-item>
-            <el-form-item style="margin-top: 55px">
-              <el-button type="primary" class="submitBtn" @click="submitForm('ruleForm')">登录</el-button>
-            </el-form-item>
-            <div class="unlogin">
-              <router-link :to="{ path: '/forgetpwd' }"> 忘记密码? </router-link>
-              |
-              <router-link :to="{ path: '/register' }">
-                <a href="register.vue" target="_blank" align="right">注册新账号</a>
-              </router-link>
-            </div>
           </el-form>
         </div>
-      </div>
 
+
+    <div class="myForgetpEmail" align="center" v-show="emailConfirm">
+          <h4>boke帐号安全验证</h4>
+          <div>
+            <p>请使用安全邮箱317***@qq.com获取验证码</p>
+          </div>
+          <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" >
+            <el-form-item label="" prop="eamilCode" style="margin-top: 10px;">
+                 <el-input  placeholder="请输入邮箱验证码"   class="email-input" v-model="ruleForm.email">
+                    <el-button slot="append">重新发送<template>{{this.second}}</template>s</el-button>
+                 </el-input>
+              <!-- <el-row>
+                <el-col :span="15">
+                 
+                </el-col>
+              </el-row> -->
+            </el-form-item>
+            <el-form-item style="margin-top: 30px">
+              <el-button type="primary" class="submitBtn" @click="sendEmail()">确定</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+
+      </div>
     </div>
 </template>
 
@@ -54,7 +55,13 @@
                 ruleForm: {
                     username: '',
                     password: '',
+                    email:'',
+                    eamilCode:'',
                 },
+                second:60,
+                canClick: true,
+                emailConfirm: false,
+                sendemailDiv: true, 
                 rules: {
                     username: [
                         {required: true, message: '请输入胡用户名！', trigger: 'blur'},
@@ -63,7 +70,13 @@
                     password: [
                         {required: true, message: '请输入密码！', trigger: 'blur'}
                     ],
-
+                    email: [
+                      {required: true,message: '请输入邮箱!', trigger: 'blur'},
+                      { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+                    ],
+                    eamilCode:[
+                        {required: true, message: '请输入验证码！', trigger: 'blur'}
+                    ],
                 }
             };
         },
@@ -114,6 +127,27 @@
             },
             resetForm(formName) {
                 this.$refs[formName].resetFields();
+            },
+            sendEmail(){
+                this.sendemailDiv = false;
+                this.emailConfirm = true;
+                // let time = window.setInterval(function(){
+                //     this.second--;
+                //     if(this.second == 0){
+                //         window.clearInterval(time);
+                //     }
+                // },1000);
+                let clock = window.setInterval(() => {
+                    this.second--;
+                    this.content = this.totalTime + "s后重新发送";
+                    if (this.second < 0) {
+                        //当倒计时小于0时清除定时器
+                        window.clearInterval(clock); //关闭
+                        this.second = 60;
+                        this.canClick = true; //这里重新开启
+                    }
+             }, 1000);
+
             }
         }
     }
@@ -122,7 +156,7 @@
 </script>
 
 <style scoped>
-  .login {
+  .forgetpwe {
 
     padding: 0;
     margin: 0;
@@ -135,9 +169,9 @@
     position: relative;
   }
 
-  .mylogin {
-    width: 240px;
-    height: 280px;
+  .myForgetpwe,.myForgetpEmail {
+    width: 450px;
+    height: 300px;
     position: absolute;
     top: 0;
     left: 0;
@@ -153,7 +187,9 @@
         rgb(0, 0, 0) 100%
     );
   }
-
+  /* .email-input{
+    width: 320px;
+  } */
   .inps input {
     border: none;
     color: #fff;

@@ -10,6 +10,7 @@ import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Blogs from '../views/Blogs.vue'
 import Register from '../views/register/Register.vue'
+import forgetpwd from '../views/forgetpwd.vue'
 import BlogEdit from '../views/BlogEdit.vue'
 import BlogDetail from '../views/BlogDetail.vue'
 
@@ -36,6 +37,11 @@ const routes = [
         path: '/register',
         name: 'Register',
         component: Register
+    },
+    {
+        path: '/forgetpwd',
+        name: 'forgetpwd',
+        component: forgetpwd
     },
     {
         path: '/blog/add',
