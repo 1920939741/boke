@@ -6,6 +6,12 @@ spring:
     username: root
     password: 123456
 
+  #Redis
+  redis:
+    host: 192.168.8.128
+    port: 6379
+    password: 123456
+
 
 
 #指定mybatisPlus扫描的xml文件
