@@ -1,7 +1,12 @@
 package com.gyg.service;
 
+import com.gyg.common.lang.Result;
 import com.gyg.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import javax.mail.MessagingException;
+import javax.mail.NoSuchProviderException;
+import java.security.GeneralSecurityException;
 
 /**
  * <p>
@@ -16,4 +21,8 @@ public interface UserService extends IService<User> {
     User findByUserName(String username);
 
     User findByEmail(String email);
+
+    Result sendEmailCode(String email) throws GeneralSecurityException, MessagingException;
+
+    boolean verifyEmailCode(String email,String code) throws Exception;
 }
