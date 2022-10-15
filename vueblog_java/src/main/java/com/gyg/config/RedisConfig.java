@@ -3,6 +3,7 @@ package com.gyg.config;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gyg.ext.RedisOperationAware;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -62,5 +63,10 @@ public class RedisConfig {
         template.afterPropertiesSet();
 
         return template;
+    }
+
+    @Bean
+    public RedisOperationAware redisOperationAware(){
+        return new RedisOperationAware();
     }
 }
