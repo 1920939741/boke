@@ -23,4 +23,5 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select("select * from m_user where email = #{email}")
     User findByEmail(String email);
+
 }

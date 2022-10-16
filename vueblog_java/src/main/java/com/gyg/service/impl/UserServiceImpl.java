@@ -1,13 +1,20 @@
 package com.gyg.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.gyg.common.AssertionRequestContext;
 import com.gyg.common.comtent.KeyContentCont;
+import com.gyg.common.exception.BusinessException;
 import com.gyg.common.lang.Result;
 import com.gyg.entity.User;
 import com.gyg.ext.RedisOperationAware;
 import com.gyg.mapper.UserMapper;
 import com.gyg.service.UserService;
+import com.gyg.util.AssertUtil;
+import com.gyg.util.MD5Util;
 import com.sun.mail.util.MailSSLSocketFactory;
+import io.netty.util.internal.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +26,10 @@ import org.springframework.stereotype.Service;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Properties;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -51,12 +62,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public User findByUserName(String username) {
-        return userMapper.findByUserName(username);
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.eq("username",username);
+        return userMapper.selectOne(wrapper);
     }
 
     @Override
     public User findByEmail(String email) {
-        return userMapper.findByEmail(email);
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.eq("email",email);
+        return userMapper.selectOne(wrapper);
     }
 
     @Override
@@ -86,7 +101,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             //邮件内容
             message.setText("亲爱的boke用户" + email + "，你好！您的验证码是：" + code + ",此验证码用于验证身份，修改密码密保等。请勿将验证码透露给其他人。" +
                     "本邮箱由系统自动发送，请勿直接回复！，感谢您的访问，祝您使用愉快！");
-
+            //发送
             mailSender.send(message);
         } catch (Exception e) {
             e.printStackTrace();
@@ -106,6 +121,40 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
         return false;
     }
+
+    @Override
+    public boolean checkPassword(String password)throws Exception {
+        Long userID = AssertionRequestContext.getUserID();
+        if (userID != null){
+            User user = userMapper.selectById(userID);
+            if (user.getPassword().equals(password)){
+                return true;
+            }
+        }else {
+            throw new Exception("请先登录!");
+        }
+        return false;
+    }
+
+    @Override
+    public Integer updatePassword(String newPassword, String confirmPassword) throws BusinessException, Exception {
+        Long userID = AssertionRequestContext.getUserID();
+        AssertUtil.state(userID != null, "该用户未登录，请先登录！");
+        if (confirmPassword.equals(newPassword)) {
+            User user = new User();
+            user.setId(userID);
+            //todo 密码加密
+            //String encryptedPwd = MD5Util.getEncryptedPwd(confirmPassword);
+            user.setPassword(confirmPassword);
+            user.setLastLogin(new Timestamp(new Date().getTime()));
+            QueryWrapper wrapper = new QueryWrapper();
+            wrapper.eq("id",userID);
+            return userMapper.update(user,wrapper);
+        } else {
+            throw new BusinessException(500, "新密码跟确认密码不一致，请重新输入!");
+        }
+    }
+
 
     /**
      * 判断qq邮箱格式是否正确
@@ -132,4 +181,5 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
         return code;
     }
+
 }

@@ -3,6 +3,7 @@ package com.gyg.controller;
 
 import com.gyg.common.AssertionRequestContext;
 import com.gyg.common.comtent.ContentCont;
+import com.gyg.common.exception.BusinessException;
 import com.gyg.common.lang.Result;
 import com.gyg.entity.User;
 import com.gyg.service.UserService;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -41,7 +44,7 @@ public class UserController {
 //    @RequiresAuthentication
     @GetMapping("/index")
     public Result index(){
-        User user= userService.getById(1L);
+        User user= userService.getById(3L);
         HttpSession session = AssertionRequestContext.getSession();
         //把用户信息存在session中
         session.setAttribute(ContentCont.CURRENT_SESSION_USER,user);
@@ -97,8 +100,17 @@ public class UserController {
     @ApiOperation(value = "检查原密码")
     @ApiImplicitParam(name = "password", value = "原密码")
     @PostMapping("/checkPassword")
-    public Result checkPassword(String password){
+    public Result checkPassword(String password) throws Exception {
+        return Result.success(userService.checkPassword(password));
+    }
 
-        return Result.success();
+    @ApiOperation(value = "修改密码")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "newPassword",value = "新密码"),
+            @ApiImplicitParam(name = "confirmPassword",value = "确认密码")
+    })
+    @PostMapping("/updatePassword")
+    public Result updatePassword(String newPassword,String confirmPassword) throws BusinessException, Exception {
+        return Result.success(userService.updatePassword(newPassword,confirmPassword));
     }
 }
