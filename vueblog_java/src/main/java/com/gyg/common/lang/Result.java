@@ -34,6 +34,11 @@ public class Result implements Serializable {
         return success(200,"操作成功",data);
     }
 
+
+    public static Result success() {
+        return success(200,"操作成功",null);
+    }
+
     /**
      * 消息返回方法
      *

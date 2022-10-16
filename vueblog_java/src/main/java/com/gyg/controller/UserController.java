@@ -1,6 +1,8 @@
 package com.gyg.controller;
 
 
+import com.gyg.common.AssertionRequestContext;
+import com.gyg.common.comtent.ContentCont;
 import com.gyg.common.lang.Result;
 import com.gyg.entity.User;
 import com.gyg.service.UserService;
@@ -14,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpSession;
 import java.security.GeneralSecurityException;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -39,6 +42,9 @@ public class UserController {
     @GetMapping("/index")
     public Result index(){
         User user= userService.getById(1L);
+        HttpSession session = AssertionRequestContext.getSession();
+        //把用户信息存在session中
+        session.setAttribute(ContentCont.CURRENT_SESSION_USER,user);
         return Result.success(user);
     }
 
@@ -88,4 +94,11 @@ public class UserController {
         return Result.success(userService.verifyEmailCode(email,code));
     }
 
+    @ApiOperation(value = "检查原密码")
+    @ApiImplicitParam(name = "password", value = "原密码")
+    @PostMapping("/checkPassword")
+    public Result checkPassword(String password){
+
+        return Result.success();
+    }
 }

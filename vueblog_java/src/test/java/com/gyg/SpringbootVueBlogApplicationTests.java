@@ -42,4 +42,19 @@ class SpringbootVueBlogApplicationTests {
         System.out.println(redisTemplate.opsForValue().get("name"));
     }
 
+    /**
+     * 邮箱格式校验
+     */
+    @Test
+    public void isEmailCorrect(){
+        String email="334363281@qq.com";
+        System.out.println(isQQEmailCorrect(email));
+    }
+
+
+    public boolean isQQEmailCorrect(String email) {
+//        String regex = "[1-9]\\d{7,9}@(qq|QQ).(COM|com)";
+        String regex="([a-z][\\w]{5,17}[@][0-9a-z]{2,10}[\\.](com|cn|net|org|))||(^[1-9]{1}[0-9]{4,14}@(qq|QQ).(COM|com)$)";
+        return email.matches(regex);
+    }
 }
