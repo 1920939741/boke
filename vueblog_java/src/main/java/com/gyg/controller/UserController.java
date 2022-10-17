@@ -106,11 +106,12 @@ public class UserController {
 
     @ApiOperation(value = "修改密码")
     @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "email",value = "邮箱"),
             @ApiImplicitParam(name = "newPassword",value = "新密码"),
             @ApiImplicitParam(name = "confirmPassword",value = "确认密码")
     })
     @PostMapping("/updatePassword")
-    public Result updatePassword(String newPassword,String confirmPassword) throws BusinessException, Exception {
-        return Result.success(userService.updatePassword(newPassword,confirmPassword));
+    public Result updatePassword(String email,String newPassword,String confirmPassword) throws BusinessException {
+        return Result.success(userService.updatePassword(email,newPassword,confirmPassword));
     }
 }

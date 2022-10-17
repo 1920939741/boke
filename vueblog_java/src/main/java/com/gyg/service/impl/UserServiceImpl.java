@@ -80,11 +80,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         try {
             boolean qqEmailCorrect = isQQEmailCorrect(email);
             if (!qqEmailCorrect) {
-//                throw new Exception("邮箱不合法，请重新输入!");
                 return Result.error(508,"邮箱不合法，请重新输入!");
             }
             if (redisOperationAware.exist(KeyContentCont.EMAIL_CODE_PREFIX+"_"+email)) {
-//                throw new Exception("请求过于频繁，请60秒后从新发送!");
                 return Result.error(508,"请求过于频繁，请60秒后从新发送!");
             } else {
                 //把邮箱验证码存到redis中过期时间为60秒
@@ -137,18 +135,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public Integer updatePassword(String newPassword, String confirmPassword) throws BusinessException, Exception {
-        Long userID = AssertionRequestContext.getUserID();
-        AssertUtil.state(userID != null, "该用户未登录，请先登录！");
+    public Integer updatePassword(String email,String newPassword, String confirmPassword) throws BusinessException{
         if (confirmPassword.equals(newPassword)) {
             User user = new User();
-            user.setId(userID);
             //todo 密码加密
             //String encryptedPwd = MD5Util.getEncryptedPwd(confirmPassword);
             user.setPassword(confirmPassword);
             user.setLastLogin(new Timestamp(new Date().getTime()));
             QueryWrapper wrapper = new QueryWrapper();
-            wrapper.eq("id",userID);
+            wrapper.eq("email",email);
             return userMapper.update(user,wrapper);
         } else {
             throw new BusinessException(500, "新密码跟确认密码不一致，请重新输入!");
@@ -163,7 +158,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @return boolean
      */
     public boolean isQQEmailCorrect(String email) {
-//        String regex = "[1-9]\\d{7,9}@(qq|QQ).(COM|com)";
         String regex="([a-z][\\w]{5,17}[@][0-9a-z]{2,10}[\\.](com|cn|net|org|))||([1-9][0-9]{4,14}@(qq|QQ).(COM|com))";
         return email.matches(regex);
     }

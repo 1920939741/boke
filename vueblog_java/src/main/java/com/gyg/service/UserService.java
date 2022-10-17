@@ -31,5 +31,5 @@ public interface UserService extends IService<User> {
 
     boolean checkPassword(String password) throws Exception;
 
-    Integer updatePassword(String newPassword, String confirmPassword) throws BusinessException, Exception;
+    Integer updatePassword(String email,String newPassword, String confirmPassword) throws BusinessException;
 }
