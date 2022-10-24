@@ -3,11 +3,14 @@ package com.gyg.controller;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.map.MapUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.gyg.common.AssertionRequestContext;
+import com.gyg.common.comtent.ContentCont;
 import com.gyg.common.dto.LoginDto;
 import com.gyg.common.lang.Result;
 import com.gyg.entity.User;
 import com.gyg.service.UserService;
 import com.gyg.util.JwtUtils;
+import com.gyg.util.MD5Util;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -23,6 +26,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 
 
 @RestController
@@ -37,7 +43,7 @@ public class AccountController {
 
 
     @PostMapping("/login")
-    public Result login(@Validated @RequestBody LoginDto loginDto, HttpServletResponse response) {
+    public Result login(@RequestBody User loginDto, HttpServletResponse response) {
         log.info(String.format("用户名-密码:%s - %s", loginDto.getUsername(),loginDto.getPassword()));
 //        获取到当前用户
         Subject subject = SecurityUtils.getSubject();
@@ -50,7 +56,8 @@ public class AccountController {
 //            如果验证通过再根据用户名查找到该用户
             User user = userService.getOne(new QueryWrapper<User>().eq("username", loginDto.getUsername()));
             Assert.notNull(user, "用户不存在！");
-
+            //密码md5加密
+            //String encryptedPwd = MD5Util.getEncryptedPwd(loginDto.getPassword());
             if (!user.getPassword().equals(loginDto.getPassword())) {
                 return Result.fail("密码错误！");
             }
@@ -60,6 +67,9 @@ public class AccountController {
 //            将jwt写入
             response.setHeader("authorization", jwt);
             response.setHeader("Access-Control-Expose-Headers", "authorization");
+            HttpSession session = AssertionRequestContext.getSession();
+            //把用户信息存在session中
+            session.setAttribute(ContentCont.CURRENT_SESSION_USER,user);
 
             //            如果正确就返回用户信息
             return Result.success(MapUtil.builder()
@@ -67,6 +77,7 @@ public class AccountController {
                     .put("username", user.getUsername())
                     .put("avatar", user.getAvatar())
                     .put("email", user.getEmail())
+                    .put("authorization", jwt)
                     .map()
             );
         } catch (UnknownAccountException e) {

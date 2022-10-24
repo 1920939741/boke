@@ -7,6 +7,7 @@ import com.gyg.common.exception.BusinessException;
 import com.gyg.common.lang.Result;
 import com.gyg.entity.User;
 import com.gyg.service.UserService;
+import com.gyg.util.MD5Util;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -57,8 +58,9 @@ public class UserController {
      * @return
      */
     @PostMapping("/save")
-    public Result save(@Validated @RequestBody User user){
-        user.setPassword(defaultPassword);
+    public Result save(@Validated @RequestBody User user) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        String encryptedPwd = MD5Util.getEncryptedPwd(defaultPassword);
+        user.setPassword(encryptedPwd);
         user.setStatus(0);
         user.setCreated(new Timestamp(new Date().getTime()));
         user.setLastLogin(new Timestamp(new Date().getTime()));
