@@ -1,7 +1,11 @@
 package com.gyg.config;
 
+import com.gyg.core.interceptor.FirstInterceptor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -20,4 +24,18 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowedHeaders("*");
 
     }
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        HandlerInterceptor firstInterceptor = new FirstInterceptor();
+        registry.addInterceptor(firstInterceptor).addPathPatterns("/**")
+                .excludePathPatterns("/toolFtl", "/login/**", "/css/**", "/js/**", "/jsp/**", "/ftl/**",
+                        "/images/**", "/file/**", "/audio/**", "/html/**", "/servlet/**", "/error", "/**/**.apk");
+
+//        HandlerInterceptor interceptor = new AuthAdapter();
+//        InterceptorRegistration registration = registry.addInterceptor(interceptor);
+//        registration.addPathPatterns("/**");
+//        registration.excludePathPatterns("/toolFtl", "/login/**", "/css/**", "/js/**", "/jsp/**", "/ftl/**",
+//                "/images/**", "/file/**", "/audio/**", "/html/**", "/servlet/**", "/error", "/**/**.apk","/pacSkuInfo/**");
+    }
+
 }
