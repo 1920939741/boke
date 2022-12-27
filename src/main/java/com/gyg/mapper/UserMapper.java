@@ -7,12 +7,10 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 /**
- * <p>
- * InnoDB free: 11264 kB Mapper 接口
- * </p>
- *
- * @author 关注公众号：码猿编程日记
- * @since 2021-09-21
+ * @description: TODO
+ * @author chengyiyong
+ * @date 2022/12/20 11:45
+ * @version 1.0
  */
 @Mapper
 public interface UserMapper extends BaseMapper<User> {

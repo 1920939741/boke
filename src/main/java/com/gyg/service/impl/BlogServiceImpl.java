@@ -7,12 +7,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
- * <p>
- * InnoDB free: 11264 kB 服务实现类
- * </p>
- *
- * @author 关注公众号：码猿编程日记
- * @since 2021-09-21
+ * @description: TODO
+ * @author chengyiyong
+ * @date 2022/12/20 11:01
+ * @version 1.0
  */
 @Service
 public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements BlogService {

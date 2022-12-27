@@ -51,9 +51,9 @@ public class CodeGenerator {
 
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        String projectPath = System.getProperty("user.dir")+"/vueblog_java";
+        String projectPath = System.getProperty("user.dir");
         gc.setOutputDir(projectPath + "/src/main/java");
-        gc.setServiceName("%sService"); // 设置生成的service接口的名字的首字母
+        gc.setServiceName("%Service"); // 设置生成的service接口的名字的首字母
         gc.setAuthor("凭栏倚,吞云烟! 半入清风半入喉,清风也染人间愁!");
         gc.setOpen(false);
         gc.setSwagger2(true);       //实体属性 Swagger2 注解

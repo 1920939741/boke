@@ -14,12 +14,10 @@ import lombok.experimental.Accessors;
 import javax.validation.constraints.NotBlank;
 
 /**
- * <p>
- * InnoDB free: 11264 kB
- * </p>
- *
- * @author 关注公众号：码猿编程日记
- * @since 2021-09-21
+ * @description: TODO
+ * @author chengyiyong
+ * @date 2022/12/20 11:01
+ * @version 1.0
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

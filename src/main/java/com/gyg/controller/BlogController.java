@@ -20,12 +20,10 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 
 /**
- * <p>
- * InnoDB free: 11264 kB 前端控制器
- * </p>
- *
- * @author 关注公众号：码猿编程日记
- * @since 2021-09-21
+ * @description: TODO
+ * @author chengyiyong
+ * @date 2022/12/20 11:01
+ * @version 1.0
  */
 @RestController
 //@RequestMapping("/blog")

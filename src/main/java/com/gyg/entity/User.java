@@ -16,12 +16,10 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 /**
- * <p>
- * InnoDB free: 11264 kB
- * </p>
- *
- * @author 关注公众号：码猿编程日记
- * @since 2021-09-21
+ * @description: TODO
+ * @author chengyiyong
+ * @date 2022/12/20 10:33
+ * @version 1.0
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -52,5 +50,5 @@ public class User implements Serializable {
 
     private Timestamp lastLogin;
 
-
+    private String name;
 }
