@@ -3,6 +3,8 @@ package com.gyg.backstage.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
@@ -39,13 +41,13 @@ public class Permission implements Serializable {
     private String permissionCode;
 
     @ApiModelProperty(value = "创建时间")
-    private LocalDateTime creationDate;
+    private Timestamp creationDate;
 
     @ApiModelProperty(value = "创建人")
     private Integer createdBy;
 
     @ApiModelProperty(value = "最后修改时间")
-    private LocalDateTime lastUpdateDate;
+    private Timestamp lastUpdateDate;
 
     @ApiModelProperty(value = "最后修改人")
     private Integer lastUpdatedBy;

@@ -18,54 +18,54 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    /**
-     * 运行时异常
-     * @param e
-     * @return
-     */
-    @ResponseStatus(HttpStatus.BAD_REQUEST)     //判断返回消息是否正常
-    @ExceptionHandler(value = RuntimeException.class)
-    public Result handler(RuntimeException e){
-        log.error("运行时异常---------->>>" + e);
-        return Result.fail(e.getMessage());
-    }
-
-    /**
-     * shiro运行异常
-     * @param e
-     * @return
-     */
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)     //判断返回消息是否正常,没有权限异常
-    @ExceptionHandler(value = ShiroException.class)
-    public Result handler(ShiroException e){
-        log.error("shiro异常---------->>>" + e);
-        return Result.fail(401,e.getMessage(),null);
-    }
-
-    /**
-     * 实体校验异常
-     * @param e
-     * @return
-     */
-    @ResponseStatus(HttpStatus.BAD_REQUEST)     //判断返回消息是否正常,没有权限异常
-    @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public Result handler(MethodArgumentNotValidException e){
-        log.error("实体检验异常异常---------->>>" + e);
-        BindingResult bindingResult = e.getBindingResult();
-        ObjectError objectError = bindingResult.getAllErrors().stream().findFirst().get();
-        return Result.fail(objectError.getDefaultMessage());
-    }
-
-    /**
-     * 处理断言异常
-     * @param e
-     * @return
-     */
-    @ResponseStatus(HttpStatus.BAD_REQUEST)     //判断返回消息是否正常,没有权限异常
-    @ExceptionHandler(value = IllegalArgumentException.class)
-    public Result handler(IllegalArgumentException e){
-        log.error("断言异常异常---------->>>" + e);
-        return Result.fail(e.getMessage());
-    }
+//    /**
+//     * 运行时异常
+//     * @param e
+//     * @return
+//     */
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)     //判断返回消息是否正常
+//    @ExceptionHandler(value = RuntimeException.class)
+//    public Result handler(RuntimeException e){
+//        log.error("运行时异常---------->>>" + e);
+//        return Result.fail(e.getMessage());
+//    }
+//
+//    /**
+//     * shiro运行异常
+//     * @param e
+//     * @return
+//     */
+//    @ResponseStatus(HttpStatus.UNAUTHORIZED)     //判断返回消息是否正常,没有权限异常
+//    @ExceptionHandler(value = ShiroException.class)
+//    public Result handler(ShiroException e){
+//        log.error("shiro异常---------->>>" + e);
+//        return Result.fail(401,e.getMessage(),null);
+//    }
+//
+//    /**
+//     * 实体校验异常
+//     * @param e
+//     * @return
+//     */
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)     //判断返回消息是否正常,没有权限异常
+//    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+//    public Result handler(MethodArgumentNotValidException e){
+//        log.error("实体检验异常异常---------->>>" + e);
+//        BindingResult bindingResult = e.getBindingResult();
+//        ObjectError objectError = bindingResult.getAllErrors().stream().findFirst().get();
+//        return Result.fail(objectError.getDefaultMessage());
+//    }
+//
+//    /**
+//     * 处理断言异常
+//     * @param e
+//     * @return
+//     */
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)     //判断返回消息是否正常,没有权限异常
+//    @ExceptionHandler(value = IllegalArgumentException.class)
+//    public Result handler(IllegalArgumentException e){
+//        log.error("断言异常异常---------->>>" + e);
+//        return Result.fail(e.getMessage());
+//    }
 
 }

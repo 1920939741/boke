@@ -40,11 +40,13 @@ public class UserController {
         queryWrapper.eq("username",userDTO.getUsername());
         User user = userService.getOne(queryWrapper);
         if (ObjectUtil.isEmpty(user)){
-            return Result.error(500,String.format("用户名：[%s],不存在！"));
+            return Result.error(500,String.format("用户名：[%s],不存在！",userDTO.getUsername()));
         }
-        if (!userDTO.equals(user.getPassword())){
+        if (!userDTO.getPassword().equals(user.getPassword())){
             return Result.error(500,String.format("密码错误！"));
         }
         return Result.success(200,String.format("尊敬的[%s]用户，欢迎登陆！",user.getName()),user);
     }
+
+
 }

@@ -26,10 +26,10 @@ public class CorsConfig implements WebMvcConfigurer {
     }
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        HandlerInterceptor firstInterceptor = new FirstInterceptor();
-        registry.addInterceptor(firstInterceptor).addPathPatterns("/**")
-                .excludePathPatterns("/toolFtl", "/login/**", "/css/**", "/js/**", "/jsp/**", "/ftl/**",
-                        "/images/**", "/file/**", "/audio/**", "/html/**", "/servlet/**", "/error", "/**/**.apk");
+//        HandlerInterceptor firstInterceptor = new FirstInterceptor();
+//        registry.addInterceptor(firstInterceptor).addPathPatterns("/**")
+//                .excludePathPatterns("/toolFtl", "/login/**", "/css/**", "/js/**", "/jsp/**", "/ftl/**",
+//                        "/images/**", "/file/**", "/audio/**", "/html/**", "/servlet/**", "/error", "/**/**.apk");
 
 //        HandlerInterceptor interceptor = new AuthAdapter();
 //        InterceptorRegistration registration = registry.addInterceptor(interceptor);

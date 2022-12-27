@@ -97,22 +97,22 @@ public class JwtFilter extends AuthenticatingFilter {
     @Override
     protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request, ServletResponse response) {
 
-        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-        try {
-            //        获取到错误信息并返回
-            Throwable cause = e.getCause() == null ? e : e.getCause();
-
-            Result result = Result.fail(cause.getMessage());
-
-//        将信息转为json串
-            String jsonStr = JSONUtil.toJsonStr(result);
-
-
-//            将json串输出
-            httpServletResponse.getWriter().print(jsonStr);
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
+//        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+//        try {
+//            //        获取到错误信息并返回
+//            Throwable cause = e.getCause() == null ? e : e.getCause();
+//
+//            Result result = Result.fail(cause.getMessage());
+//
+////        将信息转为json串
+//            String jsonStr = JSONUtil.toJsonStr(result);
+//
+//
+////            将json串输出
+//            httpServletResponse.getWriter().print(jsonStr);
+//        } catch (IOException ioException) {
+//            ioException.printStackTrace();
+//        }
 
         return false;
     }
