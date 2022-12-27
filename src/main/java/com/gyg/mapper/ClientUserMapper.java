@@ -13,7 +13,7 @@ import org.apache.ibatis.annotations.Select;
  * @version 1.0
  */
 @Mapper
-public interface UserMapper extends BaseMapper<User> {
+public interface ClientUserMapper extends BaseMapper<User> {
 
 
     @Select("select * from m_user where username = #{username}")

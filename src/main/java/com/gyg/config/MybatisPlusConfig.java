@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @Configuration
 @EnableTransactionManagement
-@MapperScan("com.gyg.mapper")   //指定变成实现类的接口所在的包
+@MapperScan({"com.gyg.mapper","com.gyg.backstage.mapper"})   //指定变成实现类的接口所在的包
 public class MybatisPlusConfig {
 
     /**

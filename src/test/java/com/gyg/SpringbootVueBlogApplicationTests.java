@@ -1,14 +1,11 @@
 package com.gyg;
 
 import com.gyg.entity.User;
-import com.gyg.service.UserService;
-import com.gyg.util.RedisUtil;
+import com.gyg.service.ClientUserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -20,7 +17,7 @@ class SpringbootVueBlogApplicationTests {
     DataSource dataSource;
 
     @Autowired
-    UserService userService;
+    ClientUserService userService;
 
     @Test
     void contextLoads() throws SQLException {

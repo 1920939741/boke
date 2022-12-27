@@ -6,12 +6,11 @@ import com.gyg.common.comtent.ContentCont;
 import com.gyg.common.exception.BusinessException;
 import com.gyg.common.lang.Result;
 import com.gyg.entity.User;
-import com.gyg.service.UserService;
+import com.gyg.service.ClientUserService;
 import com.gyg.util.MD5Util;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
@@ -30,13 +29,13 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class ClientUserController {
 
     @Value("${default_password}")
     private String defaultPassword;
 
     @Autowired
-    UserService userService;
+    ClientUserService userService;
 
     /**
      * @RequiresAuthentication  指定需要登录认证才能进行的请求

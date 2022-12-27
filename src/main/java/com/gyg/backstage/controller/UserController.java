@@ -1,31 +1,19 @@
 package com.gyg.backstage.controller;
-
-
-import cn.hutool.core.lang.Assert;
-import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.gyg.backstage.dto.UserDTO;
 import com.gyg.backstage.entity.User;
 import com.gyg.backstage.service.IUserService;
-import com.gyg.common.AssertionRequestContext;
-import com.gyg.common.comtent.ContentCont;
 import com.gyg.common.lang.Result;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import java.util.Objects;
 
 /**
  * <p>
@@ -44,9 +32,19 @@ public class UserController {
     private IUserService userService;
 
     @PostMapping("/login")
-    public Result login(@RequestBody User user, HttpServletResponse response) {
-
-
-        return null;
+    public Result login(@RequestBody UserDTO userDTO) {
+        if (Objects.isNull(userDTO) || StrUtil.isBlank(userDTO.getUsername()) || StrUtil.isBlank(userDTO.getPassword())) {
+            return Result.error(500,"参数不能为空");
+        }
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username",userDTO.getUsername());
+        User user = userService.getOne(queryWrapper);
+        if (ObjectUtil.isEmpty(user)){
+            return Result.error(500,String.format("用户名：[%s],不存在！"));
+        }
+        if (!userDTO.equals(user.getPassword())){
+            return Result.error(500,String.format("密码错误！"));
+        }
+        return Result.success(200,String.format("尊敬的[%s]用户，欢迎登陆！",user.getName()),user);
     }
 }

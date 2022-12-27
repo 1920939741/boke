@@ -1,6 +1,5 @@
 package com.gyg.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gyg.common.AssertionRequestContext;
@@ -9,31 +8,19 @@ import com.gyg.common.exception.BusinessException;
 import com.gyg.common.lang.Result;
 import com.gyg.entity.User;
 import com.gyg.ext.RedisOperationAware;
-import com.gyg.mapper.UserMapper;
-import com.gyg.service.UserService;
-import com.gyg.util.AssertUtil;
-import com.gyg.util.MD5Util;
-import com.sun.mail.util.MailSSLSocketFactory;
-import io.netty.util.internal.StringUtil;
+import com.gyg.mapper.ClientUserMapper;
+import com.gyg.service.ClientUserService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.Properties;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 
 /**
  * @description: TODO
@@ -43,11 +30,11 @@ import java.util.logging.Logger;
  */
 @Slf4j
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+public class ClientUserServiceImpl extends ServiceImpl<ClientUserMapper, User> implements ClientUserService {
 
 
     @Autowired
-    private UserMapper userMapper;
+    private ClientUserMapper userMapper;
 
     @Autowired
     private RedisOperationAware redisOperationAware;

@@ -17,7 +17,7 @@ import java.security.NoSuchAlgorithmException;
  * @date 2022/12/20 10:58
  * @version 1.0
  */
-public interface UserService extends IService<User> {
+public interface ClientUserService extends IService<User> {
 
     User findByUserName(String username);
 
